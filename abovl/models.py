@@ -1,24 +1,22 @@
 """
 Database models
 """
-
 import sqlalchemy as sa
-from adsmutils import get_date, UTCDateTime
 from sqlalchemy.ext.declarative import declarative_base
 
+from abovl import utils
+
 Base = declarative_base()
-
-
 
 class OAuthClient(Base):
     __tablename__ = 'oauth_client'
     id = sa.Column(sa.Integer, primary_key=True)
     token = sa.Column(sa.String(40))
     client_id = sa.Column(sa.String(40))
-    client_secret = sa.Column(sa.String(40))
+    client_secret = sa.Column(sa.String(80))
     refresh_token = sa.Column(sa.String(40))
-    expire_in = sa.Column(UTCDateTime)
-    created = sa.Column(UTCDateTime, default=get_date)
+    expire_in = sa.Column(utils.UTCDateTime)
+    created = sa.Column(utils.UTCDateTime, default=utils.now)
     scopes = sa.Column(sa.Text())
     username = sa.Column(sa.String(512))
     ratelimit = sa.Column(sa.Float())

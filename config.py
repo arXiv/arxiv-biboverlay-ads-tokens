@@ -1,5 +1,6 @@
 
-SQLALCHEMY_DATABASE_URI = 'sqlite://'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 API_TOKEN = 'this is a secret api token!'
 API_URL = 'https://api.adsabs.harvard.edu'
@@ -41,3 +42,7 @@ CLIENT_REDIRECT_URI = None
 # a more safe alternative to saving data (oauth token) in 
 # a client cookie
 SESSION_TYPE = 'filesystem'
+SESSION_PERMANENT = False
+
+#SESSION_SQLALCHEMY_TABLE = 'sessions'
+#app.config[SESSION_SQLALCHEMY] = db

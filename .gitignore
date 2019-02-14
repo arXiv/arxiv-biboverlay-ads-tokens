@@ -101,3 +101,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# MATT
+flask_session/
+logs/
+test.db

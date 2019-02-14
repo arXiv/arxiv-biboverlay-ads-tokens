@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from adsmutils import ADSFlask, get_date
-from views import bp
+from adsmutils import ADSFlask
+from abovl.views import bp
 from abovl.models import OAuthClient
 from flask.ext.session import Session
 
@@ -39,7 +39,7 @@ class AbovlADSFlask(ADSFlask):
             t = session.query(OAuthClient).filter_by(token=token).first()
             if t:
                 return t.toJSON()
-            
+
     def delete_client(self, cid):
         with self.session_scope() as session:
             session.query(OAuthClient).filter_by(id=cid).delete()

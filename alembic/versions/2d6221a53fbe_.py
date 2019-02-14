@@ -13,7 +13,7 @@ down_revision = None
 
 from alembic import op
 import sqlalchemy as sa
-from adsmutils import get_date, UTCDateTime
+from abovl import utils
 
 
 def upgrade():
@@ -22,10 +22,10 @@ def upgrade():
         sa.Column('token', sa.String(length=40)),
         sa.Column('refresh_token', sa.String(length=40)),
         sa.Column('client_id', sa.String(length=40)),
-        sa.Column('client_secret', sa.String(length=40)),
+        sa.Column('client_secret', sa.String(length=80)),
         sa.Column('ratelimit', sa.Float()),
-        sa.Column('expire_in', UTCDateTime),
-        sa.Column('created', UTCDateTime, default=get_date),
+        sa.Column('expire_in', utils.UTCDateTime),
+        sa.Column('created', utils.UTCDateTime, default=utils.now),
         sa.Column('scopes', sa.Text()),
         sa.Column('username', sa.String(length=512)),
         
