@@ -1,5 +1,4 @@
-
-SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///testdb.sqlite'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 API_TOKEN = 'this is a secret api token!'
@@ -41,8 +40,8 @@ CLIENT_REDIRECT_URI = None
 # Sessions are used to store data on the server side; as 
 # a more safe alternative to saving data (oauth token) in 
 # a client cookie
-SESSION_TYPE = 'filesystem'
-SESSION_PERMANENT = False
+SESSION_TYPE = 'sqlalchemy'
+SESSION_PERMANENT = True
 
 #SESSION_SQLALCHEMY_TABLE = 'sessions'
 #app.config[SESSION_SQLALCHEMY] = db

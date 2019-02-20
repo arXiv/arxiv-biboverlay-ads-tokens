@@ -4,7 +4,7 @@
 from adsmutils import ADSFlask
 from abovl.views import bp
 from abovl.models import OAuthClient
-from flask.ext.session import Session
+from flask_session import Session
 
 def create_app(**config):
     """
