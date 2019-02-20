@@ -1,22 +1,9 @@
 version: '2.1'
 
 services:
-  bibex-redis:
-    image: redis
-    container_name: bibex-redis
-    networks:
-      - bibex-network
-    healthcheck:
-      test: redis-cli ping || exit 1
-      interval: 3s
-      timeout: 10s
-      retries: 3
-
   bibex-mysql:
     image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql
-    volumes:
-        - ./database.sql:/data/application/init.sql
+    command: --default-authentication-plugin=mysql_native_password
     container_name: bibex-mysql
     networks:
       - bibex-network
@@ -24,6 +11,9 @@ services:
       - "3306"
     environment:
       MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "bibex"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "password"
     healthcheck:
       test: /usr/bin/mysql -uroot -ppassword --silent --execute "SELECT 1;" || exit 1
       interval: 5s
@@ -38,11 +28,10 @@ services:
     environment:
       DEBUG: "true"
       SQLALCHEMY_DATABASE_URI: 'mysql://root:password@bibex-mysql/bibex'
-      SESSION_TYPE: 'redis'
+      SESSION_TYPE: 'sqlalchemy'
+      SECRET_KEY: 'supersecret'
     depends_on:
       bibex-mysql:
-        condition: service_healthy
-      bibex-redis:
         condition: service_healthy
     networks:
       - bibex-network
