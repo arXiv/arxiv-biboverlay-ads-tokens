@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-adsmutils = {ref = "v1.0.15",git = "https://github.com/adsabs/ADSMicroserviceUtils.git",editable = true}
+adsmutils = {editable = true,git = "https://github.com/adsabs/ADSMicroserviceUtils.git",ref = "v1.0.15"}
 alembic = "*"
 flask = "*"
 flask-headers = "*"

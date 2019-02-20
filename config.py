@@ -40,7 +40,7 @@ CLIENT_REDIRECT_URI = None
 # Sessions are used to store data on the server side; as 
 # a more safe alternative to saving data (oauth token) in 
 # a client cookie
-SESSION_TYPE = 'sqlalchemy'
+SESSION_TYPE = 'filesystem'
 SESSION_PERMANENT = True
 
 #SESSION_SQLALCHEMY_TABLE = 'sessions'
