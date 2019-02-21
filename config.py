@@ -1,7 +1,9 @@
+# variables which should be supplied by the environment (contain secrets)
 SQLALCHEMY_DATABASE_URI = 'sqlite:///testdb.sqlite'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
 API_TOKEN = 'this is a secret api token!'
+SECRET_KEY = 'change me'
+
+# url to use for the oauth client
 API_URL = 'https://api.adsabs.harvard.edu'
 
 # ratio of the normal ratelimit that should be available to the
@@ -13,7 +15,6 @@ API_URL = 'https://api.adsabs.harvard.edu'
 CLIENT_RATELIMIT = 0.1
 
 # Flask key used to sign cookies and to salt db entries
-SECRET_KEY = 'change me'
 
 # on ADS side the OAuth application (when created)
 # is given a name; which becomes unique identification
@@ -25,7 +26,7 @@ CLIENT_NAME_PREFIX = 'BibOverlay'
 # granted to the newly created application (once created
 # those cannot be edited); if None then ADS will assign
 # some default API scopes
-CLIENT_SCOPES = None
+CLIENT_SCOPES = 'api'
 
 
 # For OAuth dance (that is - to request permissions to
@@ -40,8 +41,7 @@ CLIENT_REDIRECT_URI = None
 # Sessions are used to store data on the server side; as 
 # a more safe alternative to saving data (oauth token) in 
 # a client cookie
-SESSION_TYPE = 'filesystem'
-SESSION_PERMANENT = True
+SESSION_TYPE = 'sqlalchemy'
 
-#SESSION_SQLALCHEMY_TABLE = 'sessions'
-#app.config[SESSION_SQLALCHEMY] = db
+# perhaps if performance problems:
+#SQLALCHEMY_TRACK_MODIFICATIONS = False
