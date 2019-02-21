@@ -12,7 +12,7 @@ API_URL = 'https://api.adsabs.harvard.edu'
 # because each user account only has limited capacity. For example,
 # if your user account has global ratelimit of 100, you can create
 # 100 / 0.1 = 1000 sub-clients
-CLIENT_RATELIMIT = 0.1
+CLIENT_RATELIMIT = 0.003
 
 # Flask key used to sign cookies and to salt db entries
 
