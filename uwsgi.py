@@ -14,12 +14,12 @@ def turn_on_debug(app):
 
 def application(environ, start_response):
     app = abovl.app.create_app()
-    bootstrap.bootstrap(app)
 
-    print("MATT: checking debug")
+    if os.environ.get('BOOTSTRAP_UWSGI'):
+        bootstrap.bootstrap(app)
+
     if os.environ.get('DEBUG'):
         turn_on_debug(app)
-        print("DEBUG")
 
     return app(environ, start_response)
 
