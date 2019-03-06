@@ -4,6 +4,7 @@
 from adsmutils import ADSFlask
 from abovl.views import bp
 from abovl.models import OAuthClient
+from abovl.utils import future_datetime
 from flask_session import Session
 
 def create_app(**config):
@@ -69,7 +70,11 @@ class AbovlADSFlask(ADSFlask):
             'create_new': True,
             'ratelimit': self.config.get('CLIENT_RATELIMIT', 1.0)
         }
-        
+
+        if self.config.get('CLIENT_TOKEN_LIFETIME'):
+            expires = future_datetime(self.config.get('CLIENT_TOKEN_LIFETIME'))
+            kwargs.update({'expires': expires.isoformat()})
+
         r = self.client.get(url, params=kwargs)
         
         if r.status_code == 200:
