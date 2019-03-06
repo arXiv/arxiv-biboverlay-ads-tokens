@@ -22,7 +22,7 @@ CLIENT_RATELIMIT = 0.02
 # for viewing: on average, we need a token lifetime of
 #   t_token = (5k * 40) / (40k * 30) * 24 hours = 4 hours
 # If None, then the default will be accepted from the main app
-CLIENT_TOKEN_LIFETIME = 60*5 #4*60*60
+CLIENT_TOKEN_LIFETIME = 4*60*60
 
 
 # on ADS side the OAuth application (when created)
