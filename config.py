@@ -38,19 +38,30 @@ CLIENT_NAME_PREFIX = 'BibOverlay'
 CLIENT_SCOPES = 'api'
 
 
-# For OAuth dance (that is - to request permissions to
-# access user's data, every OAuth application must provide
-# an redirect URI) - clients will be redirected to that 
-# address. Put in here the real name of the server
-# where this microservice is deployed. Must be running
-# under HTTPS scheme; e.g. https://foobar.elasticbeanstalk.com
+# For OAuth dance (that is - to request permissions to access user's
+# data, every OAuth application must provide an redirect URI) -
+# clients will be redirected to that address. Put in here the real
+# name of the server where this microservice is deployed. Must be
+# running under HTTPS scheme; e.g. https://foobar.elasticbeanstalk.com
 CLIENT_REDIRECT_URI = None
 
 
-# Sessions are used to store data on the server side; as 
-# a more safe alternative to saving data (oauth token) in 
-# a client cookie
+# Sessions are used to store data on the server side; as a more safe
+# alternative to saving data (oauth token) in a client cookie
 SESSION_TYPE = 'sqlalchemy'
 
-# perhaps if performance problems:
-#SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# SQLAlchemy does not seem to respect pool or max_overflow in a
+# resonable manner. Ex with 4 processes and pool=1 overflow=8 I'm
+# seeing 80 connections to mysql when I'd expect 36.  uWsgi restart of
+# workers will close all connections held by that worker so setting
+# uwsgi max-worker-lifetime to a low value (around 10 or 15 sec) is a
+# way to work around this problem. Hopefully it is fixed in newer
+# versions.
+SQLALCHEMY_POOL_SIZE = 1
+SQLALCHEMY_MAX_OVERFLOW = 1
+
+# By default SQLAlchemy keeps connections around forever
+# Invalidate them after a time. This barely seems to work.
+SQLALCHEMY_POOL_RECYCLE = 1
