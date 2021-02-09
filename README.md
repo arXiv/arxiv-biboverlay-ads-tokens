@@ -5,10 +5,18 @@
 Tiny microservice to help arxiv. It provides a bootstrap service to obtain 
 OAuth token that are subordinate to the main Arxiv OAuth client.
 
-## deployment 
+## deployment:
+
+    Run development server with:
     
-    TODO: use dockerfile
+    `API_KEY=1234_GET_ME_FROM_ADS  uwsgi --ini uwsgi.ini`
+
+    or 
     
+    `API_TOKEN=1234_GET_ME_FROM_ADS  python cors.py`
+    
+    To create tables in new database run flask with BOOTSTRAP_UWSGI=1.
+
 ## Usage:
 
     `curl somewhere.com/token`

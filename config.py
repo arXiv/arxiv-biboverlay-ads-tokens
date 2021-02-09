@@ -1,7 +1,13 @@
+import os
+
 # variables which should be supplied by the environment (contain secrets)
-SQLALCHEMY_DATABASE_URI = 'sqlite:///testdb.sqlite'
-API_TOKEN = 'this is a secret api token!'
-SECRET_KEY = 'change me'
+SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI", 'sqlite:///testdb.sqlite')
+
+# The API_TOKEN from the people at ADS.
+# Fail if this isn't set in the environ
+API_TOKEN = os.environ.get("API_TOKEN")
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # url to use for the oauth client
 API_URL = 'https://api.adsabs.harvard.edu'
