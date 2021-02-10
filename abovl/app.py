@@ -8,7 +8,11 @@ from abovl.models import OAuthClient
 from abovl.utils import future_datetime
 from flask_session import Session
 from retry import retry
+from dateutil import tz
 
+from datetime import datetime, timedelta
+from adsmutils import get_date
+utc_zone = tz.tzutc()
 
 def create_app(**config):
     """
@@ -16,7 +20,9 @@ def create_app(**config):
     :return: flask.Flask application
     """
 
+    
     app = AbovlADSFlask('arxiv_biboverlay', local_config=config)
+    app.config.from_pyfile("./config.py")
     app.url_map.strict_slashes = False
     app.register_blueprint(bp)
     
@@ -31,8 +37,11 @@ class AbovlADSFlask(ADSFlask):
     def __init__(self, *args, **kwargs):
         ADSFlask.__init__(self, *args, **kwargs)
 
-        api_token=self.config.get("API_TOKEN"))}) # Die if not configured
+        api_token=self.config.get("API_TOKEN") # API_TOKEN is needed, should be in env vars 
 
+        # To avoid AttributeError: 'Request' object has no attribute 'is_xhr'
+        self.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+        
         # HTTP client is provided by requests module; it handles connection pooling
         # here we just set some headers we always want to use while sending a request
         self.client.headers.update({'Authorization': 'Bearer {}'.format(api_token)})
@@ -87,10 +96,11 @@ class AbovlADSFlask(ADSFlask):
                 "client_secret": j['client_secret'],
                 "token": j['access_token'],
                 "refresh_token": j['refresh_token'],
-                "expire_in": j['expire_in'],
                 "scopes": ' '.join(j['scopes'] or []),
                 "username": j['username'],
-                "ratelimit": j['ratelimit']
+                "ratelimit": j['ratelimit'],
+                "expire_in": get_date(j['expire_in']).astimezone(utc_zone),
+                "created": datetime.utcnow().replace(tzinfo=utc_zone),
             }
             c = OAuthClient(**kwargs)
             try:
@@ -100,7 +110,7 @@ class AbovlADSFlask(ADSFlask):
                 # Unable to save to db, just return the data from ADS
                 return kwargs
 
-            return c.toJSON()
+            return kwargs
         else:
             self.logger.error('Unexpected response from ADS for %s (%s): %s', url, kwargs, r.text)
 

@@ -1,11 +1,16 @@
-FROM arxiv/base:latest
+FROM centos:centos8
 
+ENV LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    APPLICATION_ROOT="/"
+    
 WORKDIR /opt/arxiv/
 
-RUN yum install -y python2-pip python2-devel mysql-devel sqlite
+RUN yum install -y gcc python2-pip python2-devel mariadb-devel sqlite git
 
 ADD Pipfile.lock /opt/arxiv/
-RUN pip install -U pip pipenv
+
+RUN python2.7 -m pip install -U pip pipenv
 RUN pipenv install --ignore-pipfile
 
 ADD abovl /opt/arxiv/abovl
