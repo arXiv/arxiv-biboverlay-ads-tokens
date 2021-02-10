@@ -65,9 +65,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # uwsgi max-worker-lifetime to a low value (around 10 or 15 sec) is a
 # way to work around this problem. Hopefully it is fixed in newer
 # versions.
-SQLALCHEMY_POOL_SIZE = 1
-SQLALCHEMY_MAX_OVERFLOW = 1
+#SQLALCHEMY_POOL_SIZE = 1
+#SQLALCHEMY_MAX_OVERFLOW = 1
 
 # By default SQLAlchemy keeps connections around forever
 # Invalidate them after a time. This barely seems to work.
-SQLALCHEMY_POOL_RECYCLE = 1
+#SQLALCHEMY_POOL_RECYCLE = 1

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from werkzeug.serving import run_simple
-from werkzeug.wsgi import DispatcherMiddleware
+#from werkzeug.wsgi import DispatcherMiddleware
 from werkzeug.debug import DebuggedApplication
 
 import abovl.app

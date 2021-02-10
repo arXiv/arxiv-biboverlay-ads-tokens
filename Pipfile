@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 adsmutils = {editable = true,git = "https://github.com/adsabs/ADSMicroserviceUtils.git",ref = "v1.0.15"}
-alembic = "*"
 flask = "*"
 flask-headers = "*"
 flask-session = "*"

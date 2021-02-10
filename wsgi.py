@@ -7,7 +7,7 @@
 """
 
 from werkzeug.serving import run_simple
-from werkzeug.wsgi import DispatcherMiddleware
+#from werkzeug.wsgi import DispatcherMiddleware
 from abovl import app
 
 application = app.create_app()

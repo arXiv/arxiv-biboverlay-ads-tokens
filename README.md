@@ -15,6 +15,10 @@ OAuth token that are subordinate to the main Arxiv OAuth client.
     
     `API_TOKEN=1234_GET_ME_FROM_ADS  python cors.py`
     
+    or
+    
+    `API_TOKEN=1234_GET_ME_FROM_ADS  python wsgi.py`
+    
     To create tables in new database run flask with BOOTSTRAP_UWSGI=1.
 
 ## Usage:
