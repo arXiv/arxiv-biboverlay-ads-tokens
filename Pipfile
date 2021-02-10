@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+adsmutils = {editable = true,git = "https://github.com/adsabs/ADSMicroserviceUtils.git",ref = "v1.0.15"}
+flask = "*"
+flask-headers = "*"
+flask-session = "*"
+flask-restful = "*"
+flask-cors = "*"
+mysqlclient = "*"
+uwsgi = "*"
+retry = "*"
+
+[dev-packages]
+flask-testing = "*"
+httpretty = "*"
+coveralls = "*"
+pep257 = "*"
+pytest = "*"
+pytest-cache = "*"
+pytest-cov = "*"
+pytest-pep8 = "*"
+mock = "*"
+ipython = "*"
+
+[requires]
+python_version = "2.7"

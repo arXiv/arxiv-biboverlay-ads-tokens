@@ -20,7 +20,7 @@ def token():
     
     if token:
         client = current_app.load_client(token)
-    
+
     # verify it is still working
     if client is not None:
         current_app.logger.debug('Loaded client based on a cookie: %s', client)
@@ -45,3 +45,6 @@ def token():
     return jsonify({'token': client['token'], 'expire_in': client['expire_in'], 
                     'scopes': client['scopes'], 'ratelimit': client['ratelimit']}), 200
 
+@bp.route('/status', methods=['GET'])
+def status():
+    return jsonify({'status': 'ready'})
