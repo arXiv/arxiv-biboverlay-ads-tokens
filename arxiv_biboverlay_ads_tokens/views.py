@@ -1,7 +1,6 @@
 
 from flask import current_app, request, Blueprint, jsonify, session
-import json
-from abovl.models import OAuthClient
+#from abovl.models import OAuthClient
 
 bp = Blueprint('abovl', __name__)
 
