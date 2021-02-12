@@ -50,3 +50,11 @@ CLIENT_SCOPES = os.environ.get('CLIENT_SCOPES', 'api')
 # running under HTTPS scheme; e.g. https://foobar.elasticbeanstalk.com
 CLIENT_REDIRECT_URI = os.environ.get('CLIENT_REDIRECT_URI', None)
 
+
+# ADS endopoint for veritying a token
+PROTECTED_ENDPOINT = os.environ.get("PROTECTED_ENDPOINT",
+                                    "v1/accounts/protected")
+
+# ADS endpoint for getting a new application API token
+BOOTSTRAP_ENDPOINT = os.environ.get("BOOTSTRAP_ENDPOINT",
+                                    "v1/accounts/bootstrap")
