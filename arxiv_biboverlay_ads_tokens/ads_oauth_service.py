@@ -1,14 +1,20 @@
-from flask import current_app
+"""Functions to access ADS's OAuth API"""
+import uuid
+
+from flask import current_app, Flask
 
 from .date_utils import future_datetime
 
-def init(app):
-    # HTTP client is provided by requests module; it handles connection pooling
-    # here we just set some headers we always want to use while sending a request
+
+def init(app: Flask) -> None:
+    """Init the service on a Flask app"""
+    # HTTP client is provided by requests module; it handles
+    # connection pooling here we just set some headers we always want
+    # to use while sending a request
     app.client.headers.update({f"Authorization": 'Bearer {app.config["API_TOKEN"]}'})
 
 
-def verify_token(access_token):
+def verify_token(access_token: str) -> bool:
     """Checks if access_token still works"""
     url = "{}/{}".format(
         current_app.config["API_URL"], current_app.config["PROTECTED_ENDPOINT"]
@@ -24,11 +30,10 @@ def create_client():
         current_app.config["API_URL"], current_app.config["BOOTSTRAP_ENDPOINT"]
     )
 
-    # TODO FIX the counter, I don't think is is really used
-    counter = 0 # random or uuid?
+    id = str(uuid.uuid4())
 
     kwargs = {
-        "name": "{}:{}".format(current_app.config["CLIENT_NAME_PREFIX"], counter + 1),
+        "name": "{}:{}".format(current_app.config["CLIENT_NAME_PREFIX"], id),
         "scopes": " ".join(current_app.config["CLIENT_SCOPES"]),
         "redirect_uri": current_app.config["CLIENT_REDIRECT_URI"],
         "create_new": True,
@@ -41,22 +46,15 @@ def create_client():
     r = current_app.client.get(url, params=kwargs)
 
     if r.status_code == 200:
-        return r.json()
-        # j = r.json()
-        # with current_app.session_scope() as session:
-        #     c = OAuthClient(
-        #         client_id=j["client_id"],
-        #         client_secret=j["client_secret"],
-        #         token=j["access_token"],
-        #         refresh_token=j["refresh_token"],
-        #         expire_in=j["expire_in"],
-        #         scopes=" ".join(j["scopes"] or []),
-        #         username=j["username"],
-        #         ratelimit=j["ratelimit"],
-        #     )
-        #     session.add(c)
-        #     session.commit()
-        #    return c.toJSON()
+        ads_resp = r.json()
+        # Don't let the browser client get the client_secret
+        return {
+            "token": ads_resp["access_token"],
+            "expire_in": ads_resp["expire_in"],
+            "scopes": ads_resp["scopes"],
+            "ratelimit": ads_resp["ratelimit"],
+        }
+
     else:
         current_app.logger.error(
             "Unexpected response for %s (%s): %s", url, kwargs, r.text
