@@ -11,7 +11,7 @@ def init(app: Flask) -> None:
     # HTTP client is provided by requests module; it handles
     # connection pooling here we just set some headers we always want
     # to use while sending a request
-    app.client.headers.update({f"Authorization": 'Bearer {app.config["API_TOKEN"]}'})
+    app.client.headers.update({"Authorization": f'Bearer {app.config["API_TOKEN"]}'})
 
 
 def verify_token(access_token: str) -> bool:
@@ -19,7 +19,7 @@ def verify_token(access_token: str) -> bool:
     url = "{}/{}".format(
         current_app.config["API_URL"], current_app.config["PROTECTED_ENDPOINT"]
     )
-    r = current_app.client.get(url)
+    r = current_app.client.get(url, headers={"Authorization": f"Bearer {access_token}"})
     return r.status_code == 200  # TODO: handle refresh in the future
 
 

@@ -1,50 +1,47 @@
 from datetime import datetime, timedelta, timezone
 
-utc_zone = timezone.utc
+# def get_date(timestr=None):
+#     """
+#     Always parses the time to be in the UTC time zone; or returns
+#     the current date (with UTC timezone specified)
 
+#     Originally from adsmicroservicesutils.adsmutils
 
-def get_date(timestr=None):
-    """
-    Always parses the time to be in the UTC time zone; or returns
-    the current date (with UTC timezone specified)
+#     :param: timestr
+#     :type: str or None
 
-    Originally from adsmicroservicesutils.adsmutils
+#     :return: datetime object with tzinfo=tzutc()
+#     """
+#     if timestr is None:
+#         return datetime.utcnow().replace(tzinfo=utc_zone)
 
-    :param: timestr
-    :type: str or None
+#     if isinstance(timestr, datetime):
+#         date = timestr
+#     else:
+#         date = parser.parse(timestr)
 
-    :return: datetime object with tzinfo=tzutc()
-    """
-    if timestr is None:
-        return datetime.utcnow().replace(tzinfo=utc_zone)
+#     if u'tzinfo' in repr(date):  # hack, around silly None.encode()...
+#         date = date.astimezone(utc_zone)
+#     else:
+#         # this depends on current locale, for the moment when not
+#         # timezone specified, I'll treat them as UTC (however, it
+#         # is probably not correct and should work with an offset
+#         # but to that we would have to know which timezone the
+#         # was created)
 
-    if isinstance(timestr, datetime):
-        date = timestr
-    else:
-        date = parser.parse(timestr)
+#         # local_date = date.replace(tzinfo=local_zone)
+#         # date = date.astimezone(utc_zone)
 
-    if u'tzinfo' in repr(date):  # hack, around silly None.encode()...
-        date = date.astimezone(utc_zone)
-    else:
-        # this depends on current locale, for the moment when not
-        # timezone specified, I'll treat them as UTC (however, it
-        # is probably not correct and should work with an offset
-        # but to that we would have to know which timezone the
-        # was created)
+#         date = date.replace(tzinfo=utc_zone)
 
-        # local_date = date.replace(tzinfo=local_zone)
-        # date = date.astimezone(utc_zone)
-
-        date = date.replace(tzinfo=utc_zone)
-
-    return date
+#     return date
 
 
 def now():
     """
     Return a datetime object with timezone information standardized to UTC
     """
-    return datetime.utcnow().replace(tzinfo=utc_zone)
+    return datetime.now(timezone.utc)
 
 
 def future_datetime(seconds):

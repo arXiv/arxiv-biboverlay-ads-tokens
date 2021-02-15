@@ -1,12 +1,12 @@
 import os
 
-###### Die if any of these are not configured from environment ##############
+# ##### Die if any of these are not configured from environment ##############
+# Setting these from defaults could lead to configuration mistakes.
 
 SECRET_KEY = os.environ['SECRET_KEY']  # must be set in environ
 API_TOKEN = os.environ['API_TOKEN']  # must be set in environ
 
-
-######### The following configs have resonable defaults ########################
+# ######## The following configs have resonable defaults #####################
 
 # url to use for the oauth client
 API_URL = os.environ.get('API_URL', 'https://api.adsabs.harvard.edu')
@@ -58,3 +58,6 @@ PROTECTED_ENDPOINT = os.environ.get("PROTECTED_ENDPOINT",
 # ADS endpoint for getting a new application API token
 BOOTSTRAP_ENDPOINT = os.environ.get("BOOTSTRAP_ENDPOINT",
                                     "v1/accounts/bootstrap")
+
+# Domain name of server hosting bibex.js to use in Access-Control-Allow-Origin
+CORS_DOMAIN = os.environ.get("CORS_DOMAIN", "https://arxiv.org")
