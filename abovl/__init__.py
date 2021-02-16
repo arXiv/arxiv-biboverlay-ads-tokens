@@ -2,9 +2,10 @@ import flask
 import requests
 from datetime import timedelta
 
-from arxiv_biboverlay_ads_tokens import config
-import arxiv_biboverlay_ads_tokens.ads_oauth_service as ads
-from .views import bp
+from abovl.views import bp
+import abovl.ads_oauth_service as ads
+
+from . import config
 
 
 def create_app(test_config=None):

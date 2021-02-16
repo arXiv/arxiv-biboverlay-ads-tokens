@@ -50,7 +50,8 @@ def create_client():
         # Don't let the browser client get the client_secret
         return {
             "token": ads_resp["access_token"],
-            "expire_in": ads_resp["expire_in"],
+#            "expire_in": ads_resp["expire_in"], # often expire_in is just the current time
+            "expire_in": expires.isoformat(),
             "scopes": ads_resp["scopes"],
             "ratelimit": ads_resp["ratelimit"],
         }
