@@ -25,7 +25,7 @@ def get_api_token(session):
         return None
 
 
-@bp.route("/token", methods=["GET"])
+@bp.route("/bibex/ads/token", methods=["GET"])
 def token():
     """Will either create a new OAuth token
             - subordinate to the API_TOKEN
@@ -64,7 +64,7 @@ def token():
             "ratelimit": client["ratelimit"],
         }
     )
-    response = make_response(payload, 200)    
+    response = make_response(payload, 200)
     response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Headers"] = (
         "DNT,X-CustomHeader,Keep-Alive,"
@@ -73,9 +73,10 @@ def token():
         "Content-Type,Authorization"
     )
     response.headers["Access-Control-Allow-Methods"] = "GET"
-    response.headers["Access-Control-Allow-Origin"] = "https://arxiv.org"    
+    response.headers["Access-Control-Allow-Origin"] = current_app.config["CORS_DOMAIN"]
     return response
 
-@bp.route("/status", methods=["GET"])
+
+@bp.route("/bibex/ads/status", methods=["GET"])
 def status():
     return jsonify({"status": "ready"})
