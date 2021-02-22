@@ -17,7 +17,7 @@ API_URL = os.environ.get('API_URL', 'https://api.adsabs.harvard.edu')
 # because each user account only has limited capacity. For example,
 # if your user account has global ratelimit of 100, you can create
 # 100 / 0.1 = 1000 sub-clients
-CLIENT_RATELIMIT = float(os.environ.get('CLIENT_RATELIMIT', 0.02))
+CLIENT_RATELIMIT = float(os.environ.get('CLIENT_RATELIMIT', 0.003))
 
 
 # it is easier if each token has a finite lifetime so that we can cycle unused
@@ -59,5 +59,9 @@ PROTECTED_ENDPOINT = os.environ.get("PROTECTED_ENDPOINT",
 BOOTSTRAP_ENDPOINT = os.environ.get("BOOTSTRAP_ENDPOINT",
                                     "v1/accounts/bootstrap")
 
-# Domain name of server hosting bibex.js to use in Access-Control-Allow-Origin
-CORS_DOMAIN = os.environ.get("CORS_DOMAIN", "https://arxiv.org")
+# Domain name of server hosting bibex.js to use in
+# Access-Control-Allow-Origin If the value does not start with http it
+# will allow all origins that end with the domain.  Ex. arxiv.org If
+# it does start with http, the it expects an exact match. Ex.
+# https://localhost:8000
+CORS_DOMAIN = os.environ.get("CORS_DOMAIN", "arxiv.org")

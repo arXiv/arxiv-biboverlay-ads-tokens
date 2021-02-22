@@ -1,4 +1,4 @@
-from flask import current_app, Blueprint, jsonify, session, make_response
+from flask import current_app, Blueprint, jsonify, session, make_response, request
 
 bp = Blueprint("adstokens", __name__)
 
@@ -73,7 +73,17 @@ def token():
         "Content-Type,Authorization"
     )
     response.headers["Access-Control-Allow-Methods"] = "GET"
-    response.headers["Access-Control-Allow-Origin"] = current_app.config["CORS_DOMAIN"]
+    acao = ''
+    if current_app.config["CORS_DOMAIN"].startswith('http'):
+        acao = current_app.config["CORS_DOMAIN"]
+    else:
+        client_origin = request.environ.get('HTTP_ORIGIN', '')
+        good_origin = client_origin.endswith(current_app.config["CORS_DOMAIN"])
+        if good_origin:
+            acao = client_origin
+        
+    response.headers["Access-Control-Allow-Origin"] = acao
+        
     return response
 
 

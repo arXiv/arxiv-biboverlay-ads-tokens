@@ -25,6 +25,7 @@ gcloud compute health-checks create http $NAME-health-check \
 
 # Create a backend service
 gcloud compute backend-services create $NAME-backend-service \
+       --protocol=HTTP \
        --project=$PROJ \
        --port-name=http \
        --health-checks=$NAME-health-check \
